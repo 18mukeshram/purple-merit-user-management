@@ -1,29 +1,35 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+import axios from "axios";
 import { AuthContext } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/login`,
+        { email, password }
+      );
 
-      login(res.data.data);
-      navigate("/");
+      // ✅ CORRECT RESPONSE HANDLING
+      const { accessToken, user } = res.data.data;
+
+      localStorage.setItem("token", accessToken);
+      setUser(user);
+
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.error?.message || "Login failed");
+      setError("Login failed");
     }
   };
 
@@ -31,7 +37,7 @@ const Login = () => {
     <div className="container">
       <h2>Login</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p className="error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <input
