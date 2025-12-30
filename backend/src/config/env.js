@@ -1,4 +1,8 @@
-const requiredEnvVars = ["PORT", "MONGO_URI", "JWT_SECRET", "NODE_ENV"];
+const requiredEnvVars = ["JWT_SECRET"];
+
+if (process.env.NODE_ENV !== "test") {
+  requiredEnvVars.push("MONGO_URI");
+}
 
 requiredEnvVars.forEach((key) => {
   if (!process.env[key]) {
@@ -8,8 +12,9 @@ requiredEnvVars.forEach((key) => {
 });
 
 module.exports = {
-  port: process.env.PORT,
+  port: process.env.PORT || 5000,
   mongoUri: process.env.MONGO_URI,
+  mongoTestUri: process.env.MONGO_TEST_URI,
   jwtSecret: process.env.JWT_SECRET,
-  nodeEnv: process.env.NODE_ENV,
+  nodeEnv: process.env.NODE_ENV || "development",
 };
