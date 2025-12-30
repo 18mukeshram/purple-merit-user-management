@@ -14,7 +14,7 @@ const AppRoutes = () => (
       <Route path="/signup" element={<Signup />} />
 
       <Route
-        path="/dashboard"
+        path="/"
         element={
           <ProtectedRoute>
             <Dashboard />
