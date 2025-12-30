@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
@@ -10,6 +10,17 @@ import AdminRoute from "../components/AdminRoute";
 const AppRoutes = () => (
   <BrowserRouter>
     <Routes>
+      <Route
+        path="/"
+        element={
+          localStorage.getItem("token") ? (
+            <Navigate to="/dashboard" replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
+        }
+      />
+
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
