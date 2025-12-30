@@ -8,10 +8,22 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <div style={{ padding: "20px" }}>
+
+      <div className="container">
         <h2>Dashboard</h2>
-        <p>Welcome, {user?.name}</p>
-        <p>Role: {user?.role}</p>
+
+        {user ? (
+          <>
+            <p>
+              <strong>Welcome:</strong> {user.name}
+            </p>
+            <p>
+              <strong>Role:</strong> {user.role}
+            </p>
+          </>
+        ) : (
+          <p>Loading user...</p>
+        )}
       </div>
     </>
   );

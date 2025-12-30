@@ -27,7 +27,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Signup</h2>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
