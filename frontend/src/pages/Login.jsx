@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -8,8 +8,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { setUser } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // ✅ ADD THIS EFFECT
+  useEffect(() => {
+    if (!loading && user) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,41 +28,34 @@ const Login = () => {
         { email, password }
       );
 
-      // ✅ CORRECT RESPONSE HANDLING
       const { accessToken, user } = res.data.data;
 
       localStorage.setItem("token", accessToken);
-      setUser(user);
-
+      // setUser is handled by AuthContext via /users/me
       navigate("/dashboard");
     } catch (err) {
       setError("Login failed");
     }
   };
 
+  if (loading) return null; // prevent flicker
+
   return (
     <div className="container">
       <h2>Login</h2>
-
       {error && <p className="error">{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
-
         <input
           type="password"
-          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-
         <button type="submit">Login</button>
       </form>
     </div>
