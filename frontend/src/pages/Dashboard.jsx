@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { AuthContext } from "../auth/AuthContext";
 
 const Dashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   return (
     <>
@@ -12,7 +12,9 @@ const Dashboard = () => {
       <div className="container">
         <h2>Dashboard</h2>
 
-        {user ? (
+        {loading ? (
+          <p>Loading user...</p>
+        ) : user ? (
           <>
             <p>
               <strong>Welcome:</strong> {user.name}
@@ -22,7 +24,7 @@ const Dashboard = () => {
             </p>
           </>
         ) : (
-          <p>Loading user...</p>
+          <p>User not found</p>
         )}
       </div>
     </>
