@@ -1,10 +1,12 @@
-## Purple Merit – Mini User Management System
+## Mini User Management System
 
-A production-ready Mini User Management System built as part of the Purple Merit Technologies – Backend Developer Intern final assessment.
+Backend Developer Intern Assessment – Purple Merit Technologies
 
-This project demonstrates secure authentication, role-based authorization, clean backend architecture, and cloud deployment with a minimal React frontend for integration proof.
+This project is a production-oriented Mini User Management System built to demonstrate secure backend design, authentication, role-based authorization, and deployment readiness.
 
-## 🚀 Live Links
+The focus of this implementation is backend correctness and security, with a minimal frontend used purely to validate API behavior and access control.
+
+## 🔗 Live Deployment
 
 Frontend (Vercel):
 https://purple-merit-user-management.vercel.app
@@ -12,21 +14,36 @@ https://purple-merit-user-management.vercel.app
 Backend (Render):
 https://purple-merit-user-management.onrender.com
 
-## 🛠 Tech Stack
+## 🧠 Design Philosophy
 
+This project was designed with the following principles:
+
+Backend as the single source of truth
+
+Explicit authentication and authorization enforcement
+
+Clear separation of concerns
+
+Minimal but functional frontend
+
+Production-style deployment and configuration
+
+UI polish was intentionally kept minimal to prioritize system correctness and architecture.
+
+## 🛠️ Tech Stack
 Backend
 
 Node.js
 
 Express.js
 
-MongoDB (Atlas)
+MongoDB Atlas
 
 JWT Authentication
 
-bcrypt (password hashing)
+bcrypt for password hashing
 
-Jest + Supertest (testing)
+Jest + Supertest for testing
 
 Frontend
 
@@ -34,97 +51,162 @@ React (Hooks)
 
 React Router
 
-Context API
+Context API for auth state
 
 ## Deployment
 
-Backend: Render
+Render – backend hosting
 
-Frontend: Vercel
+Vercel – frontend hosting
 
-## 🔐 Features
+## ✨ Features
+Authentication
 
-User Signup & Login
+User signup with input validation
 
-JWT-based authentication
+Secure password hashing using bcrypt
 
-Role-Based Access Control (USER / ADMIN)
+JWT-based login
 
-Protected routes (backend enforced)
+Token-based session handling
 
-User dashboard
+Authorization (RBAC)
 
-Profile update (name)
+Default role: USER
 
-Secure password hashing
+Admin-only routes protected via backend middleware
 
-Environment-based configuration
+Strict server-side role enforcement (no frontend trust)
 
-Cloud deployment
+User Management
+
+Fetch authenticated user (/users/me)
+
+Update own profile (name)
+
+Protected dashboard and profile routes
+
+Security Practices
+
+Passwords never stored in plain text
+
+JWT secrets stored in environment variables
+
+Role checks enforced at backend level
+
+Proper HTTP status codes for auth failures
 
 ## 📂 Project Structure
-
-/
+root/
 ├── backend/
-│ ├── src/
-│ │ ├── controllers/
-│ │ ├── routes/
-│ │ ├── middleware/
-│ │ ├── models/
-│ │ ├── config/
-│ │ └── server.js
-│ └── tests/
+│   ├── src/
+│   │   ├── auth/
+│   │   ├── users/
+│   │   ├── admin/
+│   │   ├── middlewares/
+│   │   ├── config/
+│   │   └── server.js
+│   └── tests/
 │
 ├── frontend/
-│ ├── src/
-│ │ ├── auth/
-│ │ ├── pages/
-│ │ ├── components/
-│ │ └── routes/
+│   ├── src/
+│   │   ├── auth/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   └── routes/
 │
 └── README.md
 
+
+Each layer has a single responsibility, following real-world backend service conventions.
+
+## 🔐 API Overview
+Auth Routes
+
+POST /api/auth/signup – Create new user
+
+POST /api/auth/login – Authenticate user and issue JWT
+
+User Routes (Authenticated)
+
+GET /api/users/me – Get current user
+
+PUT /api/users/me – Update profile
+
+Admin Routes (ADMIN only)
+
+GET /api/admin/users
+
+PATCH /api/admin/users/:id/role
+
+DELETE /api/admin/users/:id
+
 ## 🧪 Testing
 
-Backend tests implemented using Jest + Supertest covering:
+Backend tests are implemented using Jest + Supertest, covering:
 
-Authentication
+Signup and login flows
 
-Protected routes
+Auth-protected routes
 
-RBAC enforcement
+Role-based access control
 
-Run locally:
+Run tests locally:
 
+cd backend
 npm test
 
 ## ⚙️ Environment Variables
-
-Backend (Render)
-
-MONGO_URI=your_mongo_uri
-JWT_SECRET=your_secret
+Backend (Render / Local)
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
 NODE_ENV=production
 PORT=5000
 
 Frontend (Vercel)
-
 REACT_APP_API_URL=https://purple-merit-user-management.onrender.com/api
+
+
+No secrets are committed to the repository.
+
+## 🚀 Deployment
+
+Backend deployed on Render
+
+Frontend deployed on Vercel
+
+Environment variables managed per platform
+
+End-to-end system fully cloud-hosted
+
+## 📌 Notes on Roles
+
+All users are created with the USER role by default
+
+Admin privileges are intentionally not assignable via signup
+
+This mirrors real-world systems where admin roles are granted explicitly
 
 ## 🎯 Assessment Focus
 
-This project prioritizes:
+This project demonstrates:
 
-Backend correctness & security
+Secure authentication & authorization
 
-Clean API design
+Clean REST API design
 
-Proper authorization
+Role-based access control
 
-Production readiness
+Production deployment readiness
 
-Frontend is intentionally minimal to demonstrate backend integration.
+Backend-first engineering mindset
 
 ## 👤 Author
 
 Sai Mukesh Ram Bellamkonda
+Backend Developer Intern Candidate
+
+## ✅ Final Note
+
+This system is intentionally simple, secure, and correct.
+The goal is to demonstrate how backend systems are designed and enforced in production, not frontend styling complexity.
