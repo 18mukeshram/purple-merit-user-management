@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const res = axios.get(`${API_URL}/users/me`, {
+        const res = await axios.get(`${API_URL}/users/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
 
         setUser(res.data.data);
       } catch (error) {
+        console.error("Failed to fetch user:", error);
         localStorage.removeItem("token");
         setUser(null);
       } finally {
